@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "492342451483",
+    "project_id": "movie-list-bbb63",
+    "storage_bucket": "movie-list-bbb63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492342451483:android:e1a542b1b93a379d8b87be",
+        "android_client_info": {
+          "package_name": "com.draco.movie_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492342451483-soce37k8o113b5j8pvefdbn0jeic9dob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC3Pc4sqIR5zTcjds_oHlXBVH5m53lxm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492342451483-soce37k8o113b5j8pvefdbn0jeic9dob.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "492342451483-3caaee5dfnqm9sf0t5d1dlb4b9hd400l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.draco.movieList"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
