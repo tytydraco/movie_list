@@ -101,16 +101,18 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final data = snapshot.data as List<String>;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final item = data[index];
-                    return MovieWidget(
-                      movie: item,
-                      onDelete: () => deleteMovie(item),
-                    );
-                  },
+                return Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final item = data[index];
+                      return MovieWidget(
+                        movie: item,
+                        onDelete: () => deleteMovie(item),
+                      );
+                    },
+                  ),
                 );
               } else {
                 return const CircularProgressIndicator();
