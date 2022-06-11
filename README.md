@@ -2,6 +2,9 @@
 
 A community movie list.
 
+## Web app
+[Click here](https://tytydraco.github.io/movie_list/build/web/#/)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
