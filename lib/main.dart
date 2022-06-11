@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           IconButton(
-            onPressed: getMovies,
+            onPressed: () => setState(() {}),
             icon: const Icon(Icons.refresh),
           ),
         ],
