@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/firebase_options.dart';
 import 'package:movie_list/screens/movies_screen.dart';
+import 'package:movie_list/screens/tab_screen.dart';
 import 'package:movie_list/widgets/movie_widget.dart';
 
 void main() async {
@@ -23,7 +24,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MoviesPage(),
+      home: const DefaultTabController(
+        length: 2,
+        child: TabScreen()
+      ),
     );
   }
 }
