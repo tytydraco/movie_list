@@ -12,7 +12,6 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
   final database = Database();
-  final addMovieController = TextEditingController();
 
   void addMovie() async {
     final nameController = TextEditingController();
