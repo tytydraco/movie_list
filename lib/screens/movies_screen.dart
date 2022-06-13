@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_list/remote/database.dart';
 import 'package:movie_list/widgets/movie_widget.dart';
 
 class MoviesPage extends StatefulWidget {
@@ -10,30 +11,18 @@ class MoviesPage extends StatefulWidget {
 }
 
 class _MoviesPageState extends State<MoviesPage> {
+  final database = Database();
   final addMovieController = TextEditingController();
 
-  Future<List<String>> getMovies() async {
-    final db = FirebaseFirestore.instance;
-    final query = await db.collection('movies').get();
-    final movies = query.docs.map((e) => e.data()['movie'] as String).toList();
-    movies.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
-    return movies;
-  }
-
-  Future addMovie() async {
+  void addMovie() {
     final text = addMovieController.text;
     addMovieController.clear();
-    final db = FirebaseFirestore.instance;
-    await db.collection('movies').add({'movie': text});
+    database.addMovie(text);
     setState(() {});
   }
 
-  Future deleteMovie(String name) async {
-    final db = FirebaseFirestore.instance;
-    final query = await db.collection('movies').where('movie', isEqualTo: name).get();
-    for (var element in query.docs) {
-      await db.collection('movies').doc(element.id).delete();
-    }
+  void deleteMovie(String name) {
+    database.deleteMovie(name);
     setState(() {});
   }
 
@@ -70,7 +59,7 @@ class _MoviesPageState extends State<MoviesPage> {
             ),
           ),
           FutureBuilder(
-            future: getMovies(),
+            future: database.getMovies(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final data = snapshot.data as List<String>;
@@ -79,10 +68,10 @@ class _MoviesPageState extends State<MoviesPage> {
                     shrinkWrap: true,
                     itemCount: data.length,
                     itemBuilder: (context, index) {
-                      final item = data[index];
+                      final movie = data[index];
                       return MovieWidget(
-                        movie: item,
-                        onDelete: () => deleteMovie(item),
+                        movie: movie,
+                        onDelete: () => deleteMovie(movie),
                       );
                     },
                   ),
