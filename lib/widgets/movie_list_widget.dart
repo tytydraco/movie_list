@@ -26,7 +26,6 @@ class _MovieListWidgetState extends State<MovieListWidget> {
     return RefreshIndicator(
       onRefresh: widget.onRefresh,
       child: ListView.builder(
-        shrinkWrap: true,
         itemCount: widget.movieList.length,
         itemBuilder: (context, index) {
           final movie = widget.movieList[index];

@@ -15,10 +15,41 @@ class _MoviesScreenState extends State<MoviesScreen> {
   final addMovieController = TextEditingController();
 
   void addMovie() async {
-    final text = addMovieController.text;
-    addMovieController.clear();
-    await database.addMovie(text);
-    setState(() {});
+    final nameController = TextEditingController();
+
+    void _addMovie() {
+      database.addMovie(nameController.text).whenComplete(() {
+        Navigator.of(context).pop();
+        setState(() {});
+      });
+    }
+
+    final dialog = AlertDialog(
+      title: const Text('Add movie'),
+      content: TextField(
+        controller: nameController,
+        textInputAction: TextInputAction.done,
+        onSubmitted: (_) => _addMovie,
+        decoration: const InputDecoration(
+          hintText: 'Movie title',
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: _addMovie,
+          child: const Text('Add'),
+        ),
+      ],
+    );
+
+    await showDialog(
+      context: context,
+      builder: (context) => dialog,
+    );
   }
 
   Future refresh() async {
@@ -59,27 +90,14 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          margin: const EdgeInsets.all(16),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: TextField(
-              controller: addMovieController,
-              textInputAction: TextInputAction.go,
-              onSubmitted: (_) => addMovie(),
-              decoration: InputDecoration(
-                  hintText: 'Add movie',
-                  suffixIcon: IconButton(
-                    onPressed: addMovie,
-                    icon: const Icon(Icons.add),
-                  )
-              ),
-            ),
-          ),
-        ),
-        FutureBuilder(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: addMovie,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Center(
+        child: FutureBuilder(
           future: database.getMovies(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -100,7 +118,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
             }
           },
         ),
-      ],
+      ),
     );
   }
 }

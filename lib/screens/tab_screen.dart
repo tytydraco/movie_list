@@ -15,12 +15,6 @@ class _TabScreenState extends State<TabScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie List'),
-        actions: [
-          IconButton(
-            onPressed: () => setState(() {}),
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
         bottom: const TabBar(
           tabs: [
             Tab(

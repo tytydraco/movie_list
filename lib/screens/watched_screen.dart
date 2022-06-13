@@ -25,30 +25,28 @@ class _WatchedScreenState extends State<WatchedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder(
-          future: database.getMovies(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data as List<MovieModel>;
-              final onlyWatched = data.where((element) => element.watched)
-                  .toList();
-              return Expanded(
-                child: WatchedListWidget(
-                  movieList: onlyWatched,
-                  onRefresh: refresh,
-                  onUnwatched: (movie) => unwatchedMovie(movie),
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
-      ],
+    return Center(
+      child: FutureBuilder(
+        future: database.getMovies(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data as List<MovieModel>;
+            final onlyWatched = data.where((element) => element.watched)
+                .toList();
+            return Expanded(
+              child: WatchedListWidget(
+                movieList: onlyWatched,
+                onRefresh: refresh,
+                onUnwatched: (movie) => unwatchedMovie(movie),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }
