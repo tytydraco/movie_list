@@ -33,12 +33,10 @@ class _WatchedScreenState extends State<WatchedScreen> {
             final data = snapshot.data as List<MovieModel>;
             final onlyWatched = data.where((element) => element.watched)
                 .toList();
-            return Expanded(
-              child: WatchedListWidget(
-                movieList: onlyWatched,
-                onRefresh: refresh,
-                onUnwatched: (movie) => unwatchedMovie(movie),
-              ),
+            return WatchedListWidget(
+              movieList: onlyWatched,
+              onRefresh: refresh,
+              onUnwatched: (movie) => unwatchedMovie(movie),
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());

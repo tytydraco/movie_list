@@ -102,13 +102,11 @@ class _MoviesScreenState extends State<MoviesScreen> {
             if (snapshot.hasData) {
               final data = snapshot.data as List<MovieModel>;
               final onlyUnwatched = data.where((element) => !element.watched).toList();
-              return Expanded(
-                child: MovieListWidget(
-                  movieList: onlyUnwatched,
-                  onRefresh: refresh,
-                  onDelete: (movie) => deleteMovie(movie),
-                  onWatched: (movie) => watchedMovie(movie),
-                ),
+              return MovieListWidget(
+                movieList: onlyUnwatched,
+                onRefresh: refresh,
+                onDelete: (movie) => deleteMovie(movie),
+                onWatched: (movie) => watchedMovie(movie),
               );
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
