@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MovieWidget extends StatelessWidget {
+class WatchedWidget extends StatelessWidget {
   final String movie;
-  final Function onDelete;
-  final Function onWatched;
+  final Function onUnwatched;
 
-  const MovieWidget({
+  const WatchedWidget({
     Key? key,
     required this.movie,
-    required this.onDelete,
-    required this.onWatched,
+    required this.onUnwatched,
   }) : super(key: key);
 
   @override
@@ -25,12 +23,8 @@ class MovieWidget extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () => onWatched(),
-            icon: const Icon(Icons.visibility),
-          ),
-          IconButton(
-            onPressed: () => onDelete(),
-            icon: const Icon(Icons.delete),
+            onPressed: () => onUnwatched(),
+            icon: const Icon(Icons.visibility_off),
           ),
         ],
       ),

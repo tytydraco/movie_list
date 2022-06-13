@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_model.dart';
 import 'package:movie_list/remote/database.dart';
 import 'package:movie_list/widgets/movie_list_widget.dart';
-import 'package:movie_list/widgets/movie_widget.dart';
 
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({Key? key}) : super(key: key);
@@ -15,19 +14,24 @@ class _MoviesScreenState extends State<MoviesScreen> {
   final database = Database();
   final addMovieController = TextEditingController();
 
-  void addMovie() {
+  void addMovie() async {
     final text = addMovieController.text;
     addMovieController.clear();
-    database.addMovie(text);
-    setState(() {});
-  }
-
-  void deleteMovie(String name) {
-    database.deleteMovie(name);
+    await database.addMovie(text);
     setState(() {});
   }
 
   Future refresh() async {
+    setState(() {});
+  }
+
+  void deleteMovie(MovieModel movie) async {
+    await database.deleteMovie(movie.movie);
+    setState(() {});
+  }
+
+  void watchedMovie(MovieModel movie) async {
+    await database.updateMovie(movie.movie, {'watched': true});
     setState(() {});
   }
 
@@ -58,11 +62,13 @@ class _MoviesScreenState extends State<MoviesScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.data as List<MovieModel>;
+              final onlyUnwatched = data.where((element) => !element.watched).toList();
               return Expanded(
                 child: MovieListWidget(
-                  movieList: data,
-                  onDelete: (movie) => deleteMovie(movie.movie),
+                  movieList: onlyUnwatched,
                   onRefresh: refresh,
+                  onDelete: (movie) => deleteMovie(movie),
+                  onWatched: (movie) => watchedMovie(movie),
                 ),
               );
             } else if (snapshot.hasError) {

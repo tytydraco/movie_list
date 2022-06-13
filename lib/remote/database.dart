@@ -26,8 +26,14 @@ class Database {
   Future deleteMovie(String name) async {
     final db = FirebaseFirestore.instance;
     final query = await db.collection('movies').where('movie', isEqualTo: name).get();
-    for (var element in query.docs) {
-      await db.collection('movies').doc(element.id).delete();
-    }
+    final element = query.docs.first;
+    await db.collection('movies').doc(element.id).delete();
+  }
+
+  Future updateMovie(String name, Map<String, Object?> newData) async {
+    final db = FirebaseFirestore.instance;
+    final query = await db.collection('movies').where('movie', isEqualTo: name).get();
+    final element = query.docs.first;
+    await db.collection('movies').doc(element.id).update(newData);
   }
 }

@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_model.dart';
 import 'package:movie_list/widgets/movie_widget.dart';
+import 'package:movie_list/widgets/watched_widget.dart';
 
-class MovieListWidget extends StatefulWidget {
+class WatchedListWidget extends StatefulWidget {
   final List<MovieModel> movieList;
   final Future<void> Function() onRefresh;
-  final Function(MovieModel) onDelete;
-  final Function(MovieModel) onWatched;
+  final Function(MovieModel) onUnwatched;
 
-  const MovieListWidget({
+  const WatchedListWidget({
     Key? key,
     required this.movieList,
     required this.onRefresh,
-    required this.onDelete,
-    required this.onWatched,
+    required this.onUnwatched,
   }) : super(key: key);
 
   @override
-  State<MovieListWidget> createState() => _MovieListWidgetState();
+  State<WatchedListWidget> createState() => _WatchedListWidgetState();
 }
 
-class _MovieListWidgetState extends State<MovieListWidget> {
+class _WatchedListWidgetState extends State<WatchedListWidget> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -30,10 +29,9 @@ class _MovieListWidgetState extends State<MovieListWidget> {
         itemCount: widget.movieList.length,
         itemBuilder: (context, index) {
           final movie = widget.movieList[index];
-          return MovieWidget(
+          return WatchedWidget(
             movie: movie.movie,
-            onDelete: () => widget.onDelete(movie),
-            onWatched: () => widget.onWatched(movie),
+            onUnwatched: () => widget.onUnwatched(movie),
           );
         },
       ),
