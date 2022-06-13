@@ -31,8 +31,7 @@ class _WatchedScreenState extends State<WatchedScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data as List<MovieModel>;
-            final onlyWatched = data.where((element) => element.watched)
-                .toList();
+            final onlyWatched = data.where((element) => element.watched).toList();
             return WatchedListWidget(
               movieList: onlyWatched,
               onRefresh: refresh,
