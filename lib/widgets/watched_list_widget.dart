@@ -19,6 +19,33 @@ class WatchedListWidget extends StatefulWidget {
 class _WatchedListWidgetState extends State<WatchedListWidget> {
   late final database = Database(widget.listId);
 
+  void deleteMovie(MovieModel movie) async {
+    final dialog = AlertDialog(
+      title: const Text('Confirm'),
+      content: const Text('Are you sure you want to delete this movie?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            database.deleteMovie(movie.movie).whenComplete(() {
+              Navigator.of(context).pop();
+              setState(() {});
+            });
+          },
+          child: const Text('Delete'),
+        ),
+      ],
+    );
+
+    await showDialog(
+      context: context,
+      builder: (context) => dialog,
+    );
+  }
+
   void unwatchedMovie(MovieModel movie) async {
     await database.updateMovie(movie.movie, {'watched': false});
     setState(() {});
@@ -41,6 +68,7 @@ class _WatchedListWidgetState extends State<WatchedListWidget> {
                   final movie = onlyWatched[index];
                   return WatchedWidget(
                     movie: movie.movie,
+                    onDelete: () => deleteMovie(movie),
                     onUnwatched: () => unwatchedMovie(movie),
                   );
                 },
