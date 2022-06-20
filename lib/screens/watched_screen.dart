@@ -4,14 +4,19 @@ import 'package:movie_list/remote/database.dart';
 import 'package:movie_list/widgets/watched_list_widget.dart';
 
 class WatchedScreen extends StatefulWidget {
-  const WatchedScreen({Key? key}) : super(key: key);
+  final String listId;
+
+  const WatchedScreen({
+    Key? key,
+    required this.listId,
+  }) : super(key: key);
 
   @override
   State<WatchedScreen> createState() => _WatchedScreenState();
 }
 
 class _WatchedScreenState extends State<WatchedScreen> {
-  final database = Database();
+  late final database = Database(widget.listId);
   final addMovieController = TextEditingController();
 
   Future refresh() async {

@@ -4,14 +4,19 @@ import 'package:movie_list/remote/database.dart';
 import 'package:movie_list/widgets/movie_list_widget.dart';
 
 class MoviesScreen extends StatefulWidget {
-  const MoviesScreen({Key? key}) : super(key: key);
+  final String listId;
+
+  const MoviesScreen({
+    Key? key,
+    required this.listId
+  }) : super(key: key);
 
   @override
   State<MoviesScreen> createState() => _MoviesScreenState();
 }
 
 class _MoviesScreenState extends State<MoviesScreen> {
-  final database = Database();
+  late final database = Database(widget.listId);
 
   void addMovie() async {
     final nameController = TextEditingController();

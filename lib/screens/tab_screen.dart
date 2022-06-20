@@ -3,7 +3,12 @@ import 'package:movie_list/screens/movies_screen.dart';
 import 'package:movie_list/screens/watched_screen.dart';
 
 class TabScreen extends StatefulWidget {
-  const TabScreen({Key? key}) : super(key: key);
+  final String listId;
+
+  const TabScreen({
+    Key? key,
+    required this.listId,
+  }) : super(key: key);
 
   @override
   State<TabScreen> createState() => _TabScreenState();
@@ -12,25 +17,28 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Movie List'),
-        bottom: const TabBar(
-          tabs: [
-            Tab(
-              icon: Icon(Icons.movie),
-            ),
-            Tab(
-              icon: Icon(Icons.visibility),
-            ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Movie List'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(Icons.movie),
+              ),
+              Tab(
+                icon: Icon(Icons.visibility),
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            MoviesScreen(listId: widget.listId),
+            WatchedScreen(listId: widget.listId),
           ],
         ),
-      ),
-      body: const TabBarView(
-        children: [
-          MoviesScreen(),
-          WatchedScreen(),
-        ],
       ),
     );
   }
