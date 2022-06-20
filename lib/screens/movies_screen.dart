@@ -56,10 +56,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
     );
   }
 
-  Future refresh() async {
-    setState(() {});
-  }
-
   void deleteMovie(MovieModel movie) async {
     final dialog = AlertDialog(
       title: const Text('Confirm'),
@@ -109,7 +105,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
               final onlyUnwatched = data.where((element) => !element.watched).toList();
               return MovieListWidget(
                 movieList: onlyUnwatched,
-                onRefresh: refresh,
+                onRefresh: () async => setState(() {}),
                 onDelete: (movie) => deleteMovie(movie),
                 onWatched: (movie) => watchedMovie(movie),
               );

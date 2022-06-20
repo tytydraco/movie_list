@@ -19,10 +19,6 @@ class _WatchedScreenState extends State<WatchedScreen> {
   late final database = Database(widget.listId);
   final addMovieController = TextEditingController();
 
-  Future refresh() async {
-    setState(() {});
-  }
-
   void unwatchedMovie(MovieModel movie) async {
     await database.updateMovie(movie.movie, {'watched': false});
     setState(() {});
@@ -39,7 +35,7 @@ class _WatchedScreenState extends State<WatchedScreen> {
             final onlyWatched = data.where((element) => element.watched).toList();
             return WatchedListWidget(
               movieList: onlyWatched,
-              onRefresh: refresh,
+              onRefresh: () async => setState(() {}),
               onUnwatched: (movie) => unwatchedMovie(movie),
             );
           } else if (snapshot.hasError) {
