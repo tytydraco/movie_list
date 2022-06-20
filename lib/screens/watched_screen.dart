@@ -16,35 +16,10 @@ class WatchedScreen extends StatefulWidget {
 }
 
 class _WatchedScreenState extends State<WatchedScreen> {
-  late final database = Database(widget.listId);
-  final addMovieController = TextEditingController();
-
-  void unwatchedMovie(MovieModel movie) async {
-    await database.updateMovie(movie.movie, {'watched': false});
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        future: database.getMovies(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final data = snapshot.data as List<MovieModel>;
-            final onlyWatched = data.where((element) => element.watched).toList();
-            return WatchedListWidget(
-              movieList: onlyWatched,
-              onRefresh: () async => setState(() {}),
-              onUnwatched: (movie) => unwatchedMovie(movie),
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
-      ),
+    return WatchedListWidget(
+      listId: widget.listId,
     );
   }
 }
